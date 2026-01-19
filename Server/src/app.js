@@ -8,7 +8,15 @@ import broadcastRoutes from "./routes/broadcast.routes.js";
 import appointmentRoutes from "./routes/appointment.routes.js";
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://smart-campus-alpha.vercel.app/"
+    ],
+    credentials: true
+  })
+);
 app.use(express.json());
 app.use("/api/auth",authRoutes);
 app.use("/api/availability", availabilityRoutes);
