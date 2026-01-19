@@ -88,7 +88,7 @@ app.get("/api/health", (req, res) => {
     cors({
   origin: [
     "http://localhost:3000",
-    "https://your-frontend.vercel.app"
+    "https://smart-campus-alpha.vercel.app"
   ],
   credentials: true,
 })
