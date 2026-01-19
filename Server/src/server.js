@@ -70,9 +70,29 @@ const startServer = async () => {
 
   await server.start();
 
+  // Root route (for Render & browser check)
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "SmartCampus backend is running 🚀"
+  });
+});
+
+// Health check (for monitoring)
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
+
   app.use(
     '/graphql',
-    cors(),
+    cors({
+  origin: [
+    "http://localhost:3000",
+    "https://smart-campus-alpha.vercel.app"
+  ],
+  credentials: true,
+})
+,
     bodyParser.json(),
     expressMiddleware(server, {
       context: async ({ req }) => {
@@ -95,7 +115,7 @@ const startServer = async () => {
     checkAndNotify();
   });
 
-  const PORT = process.env.PORT || 5000;
+  const PORT = process.env.PORT || 10000;
   await new Promise((resolve) => httpServer.listen({ port: PORT }, resolve));
   console.log(`🚀 Server ready at http://localhost:${PORT}/graphql`);
   console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}/graphql`);
