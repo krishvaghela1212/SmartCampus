@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: Server/*   # <-- fixed here
+          path: Server/*   # <- important: upload all contents, not folder
 
   deploy:
     runs-on: ubuntu-latest
@@ -47,7 +47,7 @@ jobs:
           name: node-app
 
       - name: List files (debug)
-        run: ls -R   # optional
+        run: ls -R   # check folder structure
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -61,4 +61,4 @@ jobs:
         with:
           app-name: 'smart-campus'
           slot-name: 'Production'
-          package: node-app   # <-- points to folder containing package.json
+          package: node-app   # <- must contain package.json directly
