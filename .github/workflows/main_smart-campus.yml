@@ -27,11 +27,16 @@ jobs:
           npm install
           npm run build --if-present
 
-      - name: Upload backend artifact
+      - name: Zip backend folder
+        run: |
+          cd Server
+          zip -r ../server.zip .   # Zip the Server folder into server.zip at root
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: node-app
-          path: Server  # <--- Upload the entire Server folder
+          name: server-zip
+          path: server.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -41,13 +46,13 @@ jobs:
       contents: read
 
     steps:
-      - name: Download backend artifact
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: node-app
+          name: server-zip
 
       - name: List files for debug
-        run: ls -R
+        run: ls -lh
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -61,4 +66,4 @@ jobs:
         with:
           app-name: 'smart-campus'
           slot-name: 'Production'
-          package: node-app/Server  # <--- Point directly to the folder containing package.json
+          package: server.zip  # <-- Deploy the zipped Server folder
