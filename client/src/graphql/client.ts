@@ -5,8 +5,8 @@ import { createClient } from 'graphql-ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { onError } from '@apollo/client/link/error';
 
-const API_URL = import.meta.env.VITE_GRAPHQL_API_URL || 'http://localhost:5000/graphql';
-const WS_URL = API_URL.replace('http', 'ws');
+const API_URL = import.meta.env.VITE_GRAPHQL_HTTP_URL || 'http://localhost:5000/graphql';
+const WS_URL = import.meta.env.VITE_GRAPHQL_WS_URL || 'ws://localhost:5000/graphql';
 
 // HTTP Link
 const httpLink = createHttpLink({
