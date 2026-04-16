@@ -89,7 +89,8 @@ const startServer = async () => {
       "http://localhost:3000",
       "http://localhost:5173",
       "https://smart-campus-puce.vercel.app",
-      "https://smartcampus-iv1d.onrender.com"
+      "https://smartcampus-iv1d.onrender.com",
+      "https://smartcampusapp-seven.vercel.app"
     ],
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS'],
