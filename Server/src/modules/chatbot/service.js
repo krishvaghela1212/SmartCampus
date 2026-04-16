@@ -87,7 +87,7 @@ Respond helpfully based on the above context. If the query is about a specific f
 `;
 
         const model = genAI.getGenerativeModel({
-            model: "gemini-2.5-flash",
+            model: "gemini-1.5-flash",
             generationConfig: {
                 maxOutputTokens: 500,
                 temperature: 0.7,

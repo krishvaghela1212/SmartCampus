@@ -156,8 +156,21 @@ const cache = new InMemoryCache({
 });
 
 export const client = new ApolloClient({
-    uri: GRAPHQL_URL,
+    link: from([errorLink, splitLink]),
     cache: cache,
+    defaultOptions: {
+        watchQuery: {
+            fetchPolicy: 'cache-and-network',
+            errorPolicy: 'all',
+        },
+        query: {
+            fetchPolicy: 'cache-first',
+            errorPolicy: 'all',
+        },
+        mutate: {
+            errorPolicy: 'all',
+        },
+    },
 });
 
 // Export wsClient for manual control if needed
