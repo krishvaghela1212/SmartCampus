@@ -156,24 +156,8 @@ const cache = new InMemoryCache({
 });
 
 export const client = new ApolloClient({
-    link: from([errorLink, splitLink]),
-    cache,
-    defaultOptions: {
-        watchQuery: {
-            // "cache-and-network" is the best for persistence + updates
-            // It shows cached data instantly (persistence) and updates in background
-            fetchPolicy: 'cache-and-network',
-            errorPolicy: 'all',
-        },
-        query: {
-            // queries (standard one-off) should also try cache first or cache-and-network
-            fetchPolicy: 'cache-first',
-            errorPolicy: 'all',
-        },
-        mutate: {
-            errorPolicy: 'all',
-        },
-    },
+    uri: GRAPHQL_URL,
+    cache: cache,
 });
 
 // Export wsClient for manual control if needed
