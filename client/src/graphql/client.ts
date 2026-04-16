@@ -5,13 +5,14 @@ import { createClient } from 'graphql-ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { onError } from '@apollo/client/link/error';
 
-const isProd = import.meta.env.PROD;
-const API_URL = isProd ? 'https://smartcampus-atxa.onrender.com/graphql' : 'http://localhost:5000/graphql';
-const WS_URL = isProd ? 'wss://smartcampus-atxa.onrender.com/graphql' : 'ws://localhost:5000/graphql';
+const GRAPHQL_URL = import.meta.env.VITE_GRAPHQL_HTTP_URL;
+const WS_URL = import.meta.env.VITE_GRAPHQL_WS_URL;
+
+console.log("GRAPHQL URL:", GRAPHQL_URL);
 
 // HTTP Link
 const httpLink = createHttpLink({
-    uri: API_URL,
+    uri: GRAPHQL_URL,
 });
 
 // Error handling link
