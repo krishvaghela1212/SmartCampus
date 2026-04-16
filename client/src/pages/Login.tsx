@@ -88,7 +88,7 @@ export const LoginPage: React.FC = () => {
             <div className="space-y-4">
               <div>
                 <label className="block text-xs font-bold text-textSecondary uppercase tracking-wider mb-2">
-                  Email or Enrollment No
+                  Email or Enrollment Number
                 </label>
                 <div className="relative group">
                   <User className="absolute left-4 top-3.5 h-5 w-5 text-textSecondary group-focus-within:text-accent transition-colors" />
