@@ -1,9 +1,6 @@
 {
-    "buildCommand": "npm install && npm run build",
-    "installCommand": "npm install",
-    "framework": "vite",
-    "outputDirectory": "dist",
-    "rewrites": [
-        { "source": "/(.*)", "destination": "/index.html" }
-    ]
+  "version": 2,
+  "rewrites": [
+    { "source": "/((?!assets/|favicon.png|hero-bg.png).*)", "destination": "/index.html" }
+  ]
 }
