@@ -5,15 +5,31 @@ import {
   ArrowRight, Bot, Users, Calendar, Radio, CheckCircle, Smartphone, Shield, Zap, MousePointer2,
   Clock, MessageCircle, Megaphone, GraduationCap, ChevronRight
 } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
+import { UserRole } from '@/types';
 
 export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
+  const { token, userRole, logout } = useAuth();
   const { scrollY } = useScroll();
-  const yHero = useTransform(scrollY, [0, 500], [0, -100]);
-  const opacityHero = useTransform(scrollY, [0, 300], [1, 0]);
+  const yHero = useTransform(scrollY, [0, 800], [0, -60]);
+  const opacityHero = useTransform(scrollY, [0, 600], [1, 0.15]);
 
   const handleLoginNavigation = () => {
-    navigate('/login');
+    navigate('/dashboard');
+  };
+
+  const handleFacultyPortal = () => {
+    if (token && userRole === UserRole.STUDENT) {
+      // If a student tries to access faculty portal, we log them out first 
+      // so they can actually see the login page for faculty instead of getting bounced.
+      logout();
+      navigate('/login');
+    } else if (token && userRole === UserRole.FACULTY) {
+      navigate('/faculty-dashboard');
+    } else {
+      navigate('/login');
+    }
   };
 
   const containerVariants: Variants = {
@@ -56,38 +72,39 @@ export const LandingPage: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Floating Background Glows (Added here for layering) */}
+    <div className="flex flex-col min-h-screen bg-bgPrimary overflow-x-hidden">
+      {/* Background Glows */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-accent/10 rounded-full blur-[120px] animate-blob"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-emerald-500/10 rounded-full blur-[120px] animate-blob" style={{ animationDelay: '3s' }}></div>
+        <div className="absolute top-[-5%] left-[-5%] w-[60%] h-[60%] bg-accent/5 rounded-full blur-[100px] animate-pulse-slow"></div>
+        <div className="absolute bottom-[-5%] right-[-5%] w-[60%] h-[60%] bg-emerald-500/5 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: '3s' }}></div>
       </div>
 
-      {/* Navbar */}
+      {/* Persistent Dark Glass Navbar */}
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
-        className="sticky top-0 z-50 glass border-b border-white/5"
+        className="sticky top-0 z-50 backdrop-blur-xl bg-bgPrimary/80 border-b border-white/5"
       >
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="flex items-center space-x-3 cursor-pointer"
+            className="flex items-center space-x-2 sm:space-x-3 cursor-pointer"
             onClick={() => window.location.reload()}
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-accent to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-accent/20 rotate-3">
-              <GraduationCap className="text-white w-6 h-6 -rotate-3" />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-accent to-emerald-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg shadow-accent/20 rotate-3 transition-transform">
+              <GraduationCap className="text-white w-5 h-5 sm:w-6 sm:h-6 -rotate-3" />
             </div>
             <div>
-              <span className="text-xl font-bold tracking-tight text-white">SmartCampus</span>
-              <span className="text-[10px] block text-accent tracking-widest uppercase font-bold text-glow">L.D.C.E.</span>
+              <span className="text-lg sm:text-xl font-bold tracking-tight text-white">SmartCampus</span>
+              <span className="text-[8px] sm:text-[10px] block text-accent tracking-widest uppercase font-bold text-glow">L.D.C.E.</span>
             </div>
           </motion.div>
-          <div className="flex items-center space-x-4 md:space-x-8">
+          
+          <div className="flex items-center space-x-3 sm:space-x-8">
             <button
-              onClick={handleLoginNavigation}
-              className="text-sm font-medium text-textSecondary hover:text-white transition-colors hidden sm:block"
+              onClick={handleFacultyPortal}
+              className="text-xs sm:text-sm font-medium text-textSecondary hover:text-white transition-colors hidden sm:block"
             >
               Faculty Portal
             </button>
@@ -95,7 +112,7 @@ export const LandingPage: React.FC = () => {
               whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(46, 204, 113, 0.2)' }}
               whileTap={{ scale: 0.95 }}
               onClick={handleLoginNavigation}
-              className="px-6 py-2.5 bg-accent/10 border border-accent/30 text-accent rounded-full text-sm font-bold transition-all hover:bg-accent hover:text-bgPrimary"
+              className="px-4 py-2 sm:px-6 sm:py-2.5 bg-accent/10 border border-accent/30 text-accent rounded-full text-[10px] sm:text-sm font-bold transition-all hover:bg-accent hover:text-bgPrimary"
             >
               Get Started
             </motion.button>
@@ -103,11 +120,11 @@ export const LandingPage: React.FC = () => {
         </div>
       </motion.header>
 
-      {/* Hero Section */}
+      {/* Hero Content Area */}
       <main className="flex-1 relative">
         <motion.div
           style={{ y: yHero, opacity: opacityHero }}
-          className="max-w-7xl mx-auto px-6 pt-20 pb-32 flex flex-col items-center text-center relative z-10"
+          className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 sm:pt-20 pb-20 sm:pb-32 flex flex-col items-center text-center relative z-10"
         >
           <motion.div
             variants={containerVariants}
@@ -125,12 +142,85 @@ export const LandingPage: React.FC = () => {
 
             <motion.h1
               variants={itemVariants}
-              className="text-6xl md:text-8xl font-extrabold tracking-tight text-white mb-8 leading-[1.1]"
+              className="text-4xl sm:text-6xl md:text-8xl font-extrabold tracking-tight text-white mb-6 sm:mb-8 leading-[1.2] sm:leading-[1.1] text-center px-2"
             >
-              Bridging the Gap between <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-emerald-400 to-accent bg-[length:200%_auto] animate-[pulse_5s_ease-in-out_infinite]">
-                Faculty & Students.
-              </span>
+              {"Bridging the Gap".split("").map((char, i) => (
+                <motion.span
+                  key={`l1-${i}`}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                    filter: ["brightness(1)", "brightness(2)", "brightness(1)"]
+                  }}
+                  transition={{
+                    opacity: { delay: 0.4 + i * 0.03, duration: 0.4 },
+                    x: { delay: 0.4 + i * 0.03, duration: 0.4 },
+                    filter: {
+                      delay: 2.0 + i * 0.08,
+                      duration: 0.8,
+                      repeat: Infinity,
+                      repeatDelay: 2,
+                      ease: "easeInOut"
+                    }
+                  }}
+                  className={char === " " ? "inline-block w-[0.3em]" : "inline-block"}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+              <br />
+              {"between".split("").map((char, i) => (
+                <motion.span
+                  key={`l2-${i}`}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                    filter: ["brightness(1)", "brightness(2)", "brightness(1)"]
+                  }}
+                  transition={{
+                    opacity: { delay: 1.0 + i * 0.04, duration: 0.4 },
+                    x: { delay: 1.0 + i * 0.04, duration: 0.4 },
+                    filter: {
+                      delay: 2.5 + i * 0.08,
+                      duration: 0.8,
+                      repeat: Infinity,
+                      repeatDelay: 2,
+                      ease: "easeInOut"
+                    }
+                  }}
+                  className="inline-block"
+                >
+                  {char}
+                </motion.span>
+              ))}
+              <br />
+              {"Faculty & Students.".split("").map((char, i) => (
+                <motion.span
+                  key={`l3-${i}`}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                    filter: ["brightness(1)", "brightness(1.5)", "brightness(1)"]
+                  }}
+                  transition={{
+                    opacity: { delay: 1.4 + i * 0.04, duration: 0.4 },
+                    x: { delay: 1.4 + i * 0.04, duration: 0.4 },
+                    filter: {
+                      delay: 3.0 + i * 0.08,
+                      duration: 0.8,
+                      repeat: Infinity,
+                      repeatDelay: 2,
+                      ease: "easeInOut"
+                    }
+                  }}
+                  className={`inline-block text-transparent bg-clip-text bg-gradient-to-r from-accent via-emerald-400 to-accent bg-[length:200%_auto] animate-[pulse_5s_ease-in-out_infinite]${char === " " ? " w-[0.3em]" : ""}`}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
             </motion.h1>
 
             <motion.p
@@ -140,12 +230,12 @@ export const LandingPage: React.FC = () => {
               Ditch the office-hopping. Experience seamless faculty tracking, automated appointment booking, and AI-powered support in one futuristic hub.
             </motion.p>
 
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-md sm:max-w-none">
               <motion.button
                 whileHover={{ scale: 1.05, boxShadow: "0 20px 30px -10px rgba(46, 204, 113, 0.4)" }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleLoginNavigation}
-                className="px-10 py-5 bg-gradient-to-r from-accent to-emerald-600 text-bgPrimary rounded-2xl font-bold text-lg transition-all flex items-center shadow-xl group"
+                className="w-full sm:w-auto px-10 py-4 sm:py-5 bg-gradient-to-r from-accent to-emerald-600 text-bgPrimary rounded-2xl font-bold text-base sm:text-lg transition-all flex items-center justify-center shadow-xl group"
               >
                 Launch Dashboard
                 <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -155,7 +245,7 @@ export const LandingPage: React.FC = () => {
                 whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.05)" }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-10 py-5 bg-transparent border border-white/10 text-white rounded-2xl font-semibold text-lg transition-all"
+                className="w-full sm:w-auto px-10 py-4 sm:py-5 bg-transparent border border-white/10 text-white rounded-2xl font-semibold text-base sm:text-lg transition-all"
               >
                 See Features
               </motion.button>
@@ -188,19 +278,19 @@ export const LandingPage: React.FC = () => {
         </motion.div>
 
         {/* Features Section */}
-        <section id="features" className="py-32 relative">
-          <div className="max-w-7xl mx-auto px-6">
+        <section id="features" className="py-20 sm:py-32 relative">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="text-center mb-20"
+              viewport={{ once: true, margin: "-50px" }}
+              className="text-center mb-16 sm:mb-20"
             >
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Built for Excellence</h2>
-              <p className="text-textSecondary text-lg max-w-2xl mx-auto">Modern problems require modern solutions. Here's how we're changing the campus experience.</p>
+              <h2 className="text-3xl sm:text-5xl font-bold text-white mb-4 sm:mb-6">Built for Excellence</h2>
+              <p className="text-textSecondary text-base sm:text-lg max-w-2xl mx-auto px-2">Modern problems require modern solutions. Here's how we're changing the campus experience.</p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10">
               {features.map((feature, idx) => (
                 <motion.div
                   key={idx}
@@ -280,8 +370,8 @@ export const LandingPage: React.FC = () => {
               <div>
                 <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Platform</h4>
                 <ul className="space-y-4 text-textSecondary">
-                  <li className="hover:text-accent cursor-pointer transition-colors">Faculty Portal</li>
-                  <li className="hover:text-accent cursor-pointer transition-colors">Student Portal</li>
+                  <li onClick={handleFacultyPortal} className="hover:text-accent cursor-pointer transition-colors">Faculty Portal</li>
+                  <li onClick={handleLoginNavigation} className="hover:text-accent cursor-pointer transition-colors">Student Portal</li>
                   <li className="hover:text-accent cursor-pointer transition-colors">Support</li>
                 </ul>
               </div>

@@ -62,6 +62,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ facultyList,
     const [isDarkMode, setIsDarkMode] = useState(true);
     const [isCalendarView, setIsCalendarView] = useState(false);
     const [calendarDate, setCalendarDate] = useState(new Date());
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const profile = currentStudent;
 
@@ -218,11 +219,63 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ facultyList,
     };
 
     return (
-        <div className="flex h-screen bg-bgPrimary overflow-hidden">
-            {/* Sidebar */}
-            <div className="w-64 bg-bgSecondary border-r border-border hidden md:flex flex-col p-4">
+        <div className="flex h-screen bg-bgPrimary overflow-hidden relative">
+            {/* Mobile Header */}
+            <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-bgSecondary border-b border-border flex items-center justify-between px-4 z-40">
+                <div className="flex items-center space-x-2">
+                    <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center rotate-3">
+                        <span className="text-bgPrimary font-bold text-lg -rotate-3">L</span>
+                    </div>
+                    <span className="text-sm font-bold text-textPrimary uppercase">SmartCampus</span>
+                </div>
+                <button 
+                  onClick={() => setIsSidebarOpen(true)}
+                  className="p-2 text-textSecondary hover:text-accent transition-colors"
+                >
+                  <List className="w-6 h-6" />
+                </button>
+            </div>
+
+            {/* Mobile Sidebar Overlay */}
+            <motion.div 
+               initial={{ opacity: 0, x: -300 }}
+               animate={{ opacity: isSidebarOpen ? 1 : 0, x: isSidebarOpen ? 0 : -300 }}
+               className={`fixed inset-0 z-50 md:hidden ${isSidebarOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
+            >
+                <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsSidebarOpen(false)} />
+                <div className="absolute top-0 left-0 w-72 h-full bg-bgSecondary p-6 shadow-2xl border-r border-border">
+                    <div className="flex items-center justify-between mb-8">
+                        <div className="flex items-center space-x-2">
+                             <GraduationCap className="text-accent w-6 h-6" />
+                             <span className="text-white font-bold">SmartCampus</span>
+                        </div>
+                        <button onClick={() => setIsSidebarOpen(false)}><XCircle className="text-textSecondary w-6 h-6" /></button>
+                    </div>
+                    
+                    <nav className="space-y-2">
+                        <SidebarItem view={DashboardView.OVERVIEW} icon={LayoutDashboard} label="Overview" onClick={() => setIsSidebarOpen(false)} />
+                        <SidebarItem view={DashboardView.NOTIFICATIONS} icon={Bell} label="Inbox" badge={unreadCount} onClick={() => setIsSidebarOpen(false)} />
+                        <SidebarItem view={DashboardView.FACULTY_LIST} icon={Users} label="Faculty Status" onClick={() => setIsSidebarOpen(false)} />
+                        <SidebarItem view={DashboardView.FACULTY_FEED} icon={Radio} label="Live Feed" onClick={() => setIsSidebarOpen(false)} />
+                        <SidebarItem view={DashboardView.PROFILE} icon={User} label="My Profile" onClick={() => setIsSidebarOpen(false)} />
+                        
+                        <div className="pt-6 mt-6 border-t border-border">
+                            <button 
+                              onClick={onLogout}
+                              className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-error hover:bg-error/10 transition-all font-medium"
+                            >
+                                <LogOut className="w-5 h-5" />
+                                <span>Sign Out</span>
+                            </button>
+                        </div>
+                    </nav>
+                </div>
+            </motion.div>
+
+            {/* Desktop Sidebar */}
+            <div className="w-64 bg-bgSecondary border-r border-border hidden md:flex flex-col p-4 shrink-0">
                 <div className="flex items-center space-x-3 px-2 mb-8">
-                    <div className="w-10 h-10 bg-accent rounded-2xl flex items-center justify-center shadow-lg shadow-accent/20 rotate-3">
+                    <div className="w-10 h-10 bg-accent rounded-2xl flex items-center justify-center shadow-lg shadow-accent/20 rotate-3 transition-transform hover:rotate-6">
                         <span className="text-bgPrimary font-bold text-xl -rotate-3">L</span>
                     </div>
                     <div>
@@ -232,19 +285,19 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ facultyList,
                 </div>
 
                 <div className="mb-6 px-2 flex items-center space-x-3 pb-6 border-b border-border">
-                    <div className="relative group">
-                        <div className="w-12 h-12 rounded-2xl bg-bgPrimary border-2 border-border group-hover:border-accent flex items-center justify-center text-textSecondary group-hover:text-accent transition-all">
+                    <div className="relative group cursor-pointer" onClick={() => setCurrentView(DashboardView.PROFILE)}>
+                        <div className="w-12 h-12 rounded-2xl bg-bgPrimary border-2 border-border group-hover:border-accent flex items-center justify-center text-textSecondary group-hover:text-accent transition-all shadow-sm">
                             <User className="w-6 h-6" />
                         </div>
-                        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-accent rounded-full border-2 border-bgSecondary"></div>
+                        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-accent rounded-full border-2 border-bgSecondary shadow-sm"></div>
                     </div>
                     <div className="flex-1 min-w-0">
                         <p className="text-sm font-bold text-textPrimary truncate">{profile.name}</p>
-                        <p className="text-[10px] text-textSecondary truncate font-mono tracking-tighter">{profile.enrollmentNo}</p>
+                        <p className="text-[10px] text-textSecondary truncate font-mono tracking-tighter opacity-70 px-1 bg-bgPrimary/50 rounded inline-block">{profile.enrollmentNo}</p>
                     </div>
                 </div>
 
-                <nav className="flex-1 space-y-1 overflow-y-auto scrollbar-hide">
+                <nav className="flex-1 space-y-1 overflow-y-auto scrollbar-hide pr-1">
                     <SidebarItem view={DashboardView.OVERVIEW} icon={LayoutDashboard} label="Overview" />
                     <SidebarItem view={DashboardView.NOTIFICATIONS} icon={Bell} label="Inbox" badge={unreadCount} />
                     <SidebarItem view={DashboardView.FACULTY_LIST} icon={Users} label="Faculty Status" />
@@ -275,26 +328,25 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ facultyList,
             </div>
 
             {/* Main Content */}
-            <div className="flex-1 flex flex-col overflow-hidden relative">
-                <div className="md:hidden bg-bgSecondary border-b border-border p-4 flex justify-between items-center">
-                    <div className="flex items-center space-x-2">
-                        <div className="w-8 h-8 bg-accent rounded-xl flex items-center justify-center shadow-lg shadow-accent/20">
-                            <span className="text-bgPrimary font-bold">L</span>
-                        </div>
-                        <span className="font-bold text-textPrimary text-sm">SmartCampus</span>
-                    </div>
-                    <div className="flex items-center space-x-4">
-                        <button onClick={toggleTheme} className="p-2 bg-bgPrimary rounded-xl border border-border">
-                            {isDarkMode ? <Sun className="w-4 h-4 text-warning" /> : <Moon className="w-4 h-4 text-indigo-500" />}
-                        </button>
-                        <button onClick={handleOpenNotifications} className="relative p-2 bg-bgPrimary rounded-xl border border-border">
-                            <Bell className="w-4 h-4 text-textSecondary" />
-                            {unreadCount > 0 && <span className="absolute top-1 right-1 w-2 h-2 bg-error rounded-full border border-bgSecondary"></span>}
-                        </button>
-                    </div>
-                </div>
-
+            <div className="flex-1 flex flex-col overflow-hidden relative pt-16 md:pt-0">
+                {/* Desktop Top Actions */}
                 <div className="absolute top-4 right-8 z-40 hidden md:flex items-center space-x-4">
+                    <button
+                        onClick={toggleTheme}
+                        className="p-2.5 glass-dark rounded-xl border border-white/5 hover:border-accent/40 transition-all group shadow-xl"
+                    >
+                        {isDarkMode ? <Sun className="w-5 h-5 text-warning group-hover:rotate-45 transition-transform" /> : <Moon className="w-5 h-5 text-indigo-500 group-hover:-rotate-12 transition-transform" />}
+                    </button>
+                    <button
+                        onClick={() => setCurrentView(DashboardView.NOTIFICATIONS)}
+                        className="relative p-2.5 glass-dark rounded-xl border border-white/5 hover:border-accent/40 transition-all group shadow-xl"
+                    >
+                        <Bell className="w-5 h-5 text-textSecondary group-hover:text-accent transition-colors" />
+                        {unreadCount > 0 && (
+                            <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-error rounded-full pointer-events-none ring-2 ring-bgSecondary animate-pulse"></span>
+                        )}
+                    </button>
+                </div>
                     <div
                         className="p-2.5 bg-card border border-border rounded-2xl text-textSecondary shadow-xl flex items-center gap-2 backdrop-blur-md cursor-default"
                         title="Data is updating live"
@@ -302,8 +354,6 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ facultyList,
                         <div className="w-2 h-2 rounded-full bg-accent animate-pulse"></div>
                         <span className="text-xs font-bold pr-1">Live Sync</span>
                     </div>
-                </div>
-
                 <main className="flex-1 overflow-y-auto p-4 md:p-8 scrollbar-hide">
 
                     {currentView === DashboardView.OVERVIEW && (

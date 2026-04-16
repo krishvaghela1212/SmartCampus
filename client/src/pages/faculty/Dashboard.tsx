@@ -202,12 +202,12 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
   return (
     <div className="max-w-7xl mx-auto space-y-6 relative">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="flex flex-wrap gap-2 bg-card w-full md:w-fit p-1 rounded-xl border border-border">
+        <div className="flex flex-nowrap overflow-x-auto scrollbar-hide gap-1.5 bg-card w-full md:w-fit p-1 rounded-xl border border-border">
           {['overview', 'appointments', 'assistant', 'schedule'].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab as any)}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors flex items-center capitalize ${activeTab === tab ? 'bg-bgPrimary text-accent shadow-sm' : 'text-textSecondary hover:text-textPrimary'
+              className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all flex items-center capitalize whitespace-nowrap shrink-0 ${activeTab === tab ? 'bg-bgPrimary text-accent shadow-md ring-1 ring-accent/20' : 'text-textSecondary hover:text-textPrimary hover:bg-white/5'
                 }`}
             >
               {tab === 'overview' && <Settings className="w-4 h-4 mr-2" />}
