@@ -4,3 +4,6 @@ dist
 .vscode/* 
 !.vscode/extensions.json
 .DS_Store
+.env
+logs
+coverage

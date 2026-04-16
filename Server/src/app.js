@@ -12,7 +12,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://smart-campus-alpha.vercel.app/"
+      "https://smart-campus-git-krishv-krishs-projects-0c925a03.vercel.app/"
     ],
     credentials: true
   })
