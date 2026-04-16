@@ -88,7 +88,8 @@ const startServer = async () => {
     origin: [
       "http://localhost:3000",
       "http://localhost:5173",
-      "https://smart-campus-puce.vercel.app/"
+      "https://smart-campus-puce.vercel.app/",
+      "https://smartcampus-atxa.onrender.com"
     ],
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS'],

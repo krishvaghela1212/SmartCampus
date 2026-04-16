@@ -12,7 +12,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://smart-campus-puce.vercel.app/"
+      "https://smart-campus-puce.vercel.app/",
+      "https://smartcampus-atxa.onrender.com"
     ],
     credentials: true
   })
