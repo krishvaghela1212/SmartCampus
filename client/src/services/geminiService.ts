@@ -1,7 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
 import { Faculty } from "../types";
 const SYSTEM_INSTRUCTION_BASE = `
-You are the SmartCampus AI for L.D. College of Engineering (LDCE), Ahmedabad.
+You are the EasyConnect AI for L.D. College of Engineering (LDCE), Ahmedabad.
 Your goal is to assist students with college-related queries.
 
 Context about LDCE:

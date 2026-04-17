@@ -23,7 +23,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ facultyData, embedded = false 
     {
       id: '0',
       role: 'model',
-      text: "👋 Hi! I'm the SmartCampus AI. I can help you with faculty availability, booking appointments, and campus information. What would you like to know?",
+      text: "👋 Hi! I'm the EasyConnect AI. I can help you with faculty availability, booking appointments, and campus information. What would you like to know?",
       timestamp: Date.now()
     }
   ]);
@@ -112,7 +112,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ facultyData, embedded = false 
       {
         id: '0',
         role: 'model',
-        text: "👋 Hi! I'm the SmartCampus AI. I can help you with faculty availability, booking appointments, and campus information. What would you like to know?",
+        text: "👋 Hi! I'm the EasyConnect AI. I can help you with faculty availability, booking appointments, and campus information. What would you like to know?",
         timestamp: Date.now()
       }
     ]);
@@ -201,7 +201,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ facultyData, embedded = false 
               <Sparkles className="w-5 h-5 text-accent" />
             </div>
             <div>
-              <span className="font-bold text-textPrimary block text-sm">SmartCampus AI</span>
+              <span className="font-bold text-textPrimary block text-sm">EasyConnect AI</span>
               <span className="text-[10px] text-emerald-500 uppercase tracking-wider font-bold flex items-center">
                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1 animate-pulse" />
                 Online
@@ -284,7 +284,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ facultyData, embedded = false 
                   <Sparkles className="w-5 h-5 text-accent" />
                 </div>
                 <div>
-                  <span className="font-bold block text-sm text-textPrimary">SmartCampus AI</span>
+                  <span className="font-bold block text-sm text-textPrimary">EasyConnect AI</span>
                   <span className="text-[10px] text-emerald-500 uppercase tracking-wider font-bold flex items-center">
                     <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1 animate-pulse" />
                     Online

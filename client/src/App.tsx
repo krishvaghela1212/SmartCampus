@@ -246,7 +246,7 @@ const FacultyDashboardWrapper = () => {
             {/* Faculty Header */}
             <div className="bg-bgSecondary/80 backdrop-blur-md border-b border-white/5 p-4 flex justify-between items-center sticky top-0 z-50">
                 <div className="flex items-center space-x-2 cursor-pointer" onClick={() => setShowProfile(false)}>
-                    <span className="font-bold text-xl tracking-tight text-textPrimary">SmartCampus</span>
+                    <span className="font-bold text-xl tracking-tight text-textPrimary">EasyConnect</span>
                     <span className="text-[10px] bg-accent/20 text-accent px-2.5 py-1 rounded-full font-bold uppercase tracking-wider border border-accent/30">Faculty Portal</span>
                 </div>
                 <div className="flex items-center space-x-4">

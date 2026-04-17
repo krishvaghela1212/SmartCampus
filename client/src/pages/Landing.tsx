@@ -93,10 +93,10 @@ export const LandingPage: React.FC = () => {
             onClick={() => window.location.reload()}
           >
             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-sm rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg border border-white/10 transition-transform">
-              <img src="/favicon.png" alt="SmartCampus Logo" className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
+              <img src="/favicon.png" alt="EasyConnect Logo" className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
             </div>
             <div>
-              <span className="text-lg sm:text-xl font-bold tracking-tight text-white">SmartCampus</span>
+              <span className="text-lg sm:text-xl font-bold tracking-tight text-white">EasyConnect</span>
               <span className="text-[8px] sm:text-[10px] block text-accent tracking-widest uppercase font-bold text-glow">L.D.C.E.</span>
             </div>
           </motion.div>
@@ -287,9 +287,9 @@ export const LandingPage: React.FC = () => {
             <div className="max-w-md">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center border border-white/10">
-                  <img src="/favicon.png" alt="SmartCampus Logo" className="w-6 h-6 object-contain" />
+                  <img src="/favicon.png" alt="EasyConnect Logo" className="w-6 h-6 object-contain" />
                 </div>
-                <span className="text-2xl font-bold text-white tracking-tight">SmartCampus</span>
+                <span className="text-2xl font-bold text-white tracking-tight">EasyConnect</span>
               </div>
               <p className="text-textSecondary text-lg leading-relaxed">
                 Empowering the legacy of L.D. College of Engineering with state-of-the-art interaction technology. Built by students, for the campus.
@@ -317,7 +317,7 @@ export const LandingPage: React.FC = () => {
           </div>
 
           <div className="border-t border-white/5 pt-10 flex flex-col md:flex-row justify-between items-center text-sm text-textSecondary gap-6">
-            <p>&copy; {new Date().getFullYear()} SmartCampus LDCE. Built with precision and passion.</p>
+            <p>&copy; {new Date().getFullYear()} EasyConnect LDCE. Built with precision and passion.</p>
 
             <div className="flex items-center space-x-6">
               <span className="font-medium text-white/40">The Team:</span>

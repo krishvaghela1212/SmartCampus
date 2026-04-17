@@ -233,7 +233,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ facultyList,
                     <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center rotate-3">
                         <span className="text-bgPrimary font-bold text-lg -rotate-3">L</span>
                     </div>
-                    <span className="text-sm font-bold text-textPrimary uppercase">SmartCampus</span>
+                    <span className="text-sm font-bold text-textPrimary uppercase">EasyConnect</span>
                 </div>
                 <button 
                   onClick={() => setIsSidebarOpen(true)}
@@ -254,7 +254,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ facultyList,
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center space-x-2">
                              <img src="/favicon.png" alt="Logo" className="w-6 h-6 object-contain" />
-                             <span className="text-white font-bold">SmartCampus</span>
+                             <span className="text-white font-bold">EasyConnect</span>
                         </div>
                         <button onClick={() => setIsSidebarOpen(false)}><XCircle className="text-textSecondary w-6 h-6" /></button>
                     </div>
@@ -286,7 +286,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ facultyList,
                         <img src="/favicon.png" alt="Logo" className="w-7 h-7 object-contain" />
                     </div>
                     <div>
-                        <span className="block text-base font-bold text-textPrimary tracking-tight leading-none">SmartCampus</span>
+                        <span className="block text-base font-bold text-textPrimary tracking-tight leading-none">EasyConnect</span>
                         <span className="text-[10px] text-accent uppercase tracking-widest font-bold">L.D.C.E.</span>
                     </div>
                 </div>

@@ -77,10 +77,10 @@ export const LoginPage: React.FC = () => {
         {/* Header */}
         <div className="p-8 text-center border-b border-white/5 bg-black/20">
           <div className="w-20 h-20 bg-white/5 backdrop-blur-md rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-2xl border border-white/10">
-            <img src="/favicon.png" alt="SmartCampus Logo" className="w-14 h-14 object-contain" />
+            <img src="/favicon.png" alt="EasyConnect Logo" className="w-14 h-14 object-contain" />
           </div>
-          <h2 className="text-2xl font-bold text-white tracking-tight">Welcome Back</h2>
-          <p className="text-textSecondary mt-2 text-sm">Sign in to SmartCampus Portal</p>
+          <h1 className="text-4xl font-extrabold text-textPrimary tracking-tight">Welcome Back</h1>
+          <p className="text-textSecondary mt-2 text-sm">Sign in to EasyConnect Portal</p>
         </div>
 
         <div className="p-8">
@@ -152,7 +152,7 @@ export const LoginPage: React.FC = () => {
           </form>
 
           <div className="mt-8 pt-6 border-t border-white/5 text-center space-y-4">
-            <p className="text-sm text-textSecondary">New to SmartCampus?</p>
+            <p className="text-sm text-textSecondary">New to EasyConnect?</p>
             <Link
               to="/register"
               className="w-full inline-flex items-center justify-center space-x-2 py-3 border border-white/10 rounded-xl text-white hover:bg-white/5 transition-colors group"
