@@ -12,11 +12,11 @@ export const resolvers = {
         broadcasts: async () => await getAllBroadcasts()
     },
     Mutation: {
-        sendBroadcast: async (_, { message, department }, context) => {
+        sendBroadcast: async (_, { message, department, targetSemester }, context) => {
             if (!context.user || context.user.role !== 'FACULTY') {
                 throw new Error('Unauthorized');
             }
-            const newBroadcast = await createBroadcast(context.user.id, message, department);
+            const newBroadcast = await createBroadcast(context.user.id, message, department, targetSemester);
             pubsub.publish('BROADCAST_ADDED', { broadcastAdded: newBroadcast });
             return newBroadcast;
         }

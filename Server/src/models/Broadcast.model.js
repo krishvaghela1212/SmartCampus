@@ -14,6 +14,10 @@ const broadcastSchema = new mongoose.Schema(
     department: {
       type: String,
       default: "ALL"
+    },
+    targetSemester: {
+      type: String,
+      default: "ALL"
     }
   },
   { timestamps: true }

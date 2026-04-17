@@ -7,6 +7,7 @@ export const typeDefs = gql`
     faculty: User
     message: String!
     department: String
+    targetSemester: String
     createdAt: String
   }
 
@@ -15,7 +16,7 @@ export const typeDefs = gql`
   }
 
   extend type Mutation {
-    sendBroadcast(message: String!, department: String): Broadcast
+    sendBroadcast(message: String!, department: String, targetSemester: String): Broadcast
   }
 
   extend type Subscription {
