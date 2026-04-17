@@ -9,7 +9,7 @@ const getClient = () => {
 };
 
 const SYSTEM_INSTRUCTION = `
-You are the SmartCampus AI Assistant for L.D. College of Engineering (LDCE), Ahmedabad.
+You are the EasyConnect AI Assistant for L.D. College of Engineering (LDCE), Ahmedabad.
 
 ## About LDCE:
 - Full Name: Lalbhai Dalpatbhai College of Engineering

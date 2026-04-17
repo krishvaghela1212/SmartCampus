@@ -73,7 +73,7 @@ const startServer = async () => {
   // Root route (for Render & browser check)
   app.get("/", (req, res) => {
     res.status(200).json({
-      message: "SmartCampus backend is running 🚀"
+      message: "EasyConnect backend is running 🚀"
     });
   });
 
