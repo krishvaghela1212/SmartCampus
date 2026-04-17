@@ -2,6 +2,7 @@ import Appointment from '../../models/Appointment.model.js';
 import User from '../../models/User.model.js';
 import { pubsub } from '../../config/pubsub.js';
 import { withFilter } from 'graphql-subscriptions';
+import { bookAppointment, updateAppointmentStatus } from './service.js';
 
 export const resolvers = {
     Appointment: {
@@ -27,20 +28,14 @@ export const resolvers = {
         bookAppointment: async (_, { facultyId, date, startTime, endTime, subject }, context) => {
             if (!context.user || context.user.role !== 'STUDENT') throw new Error('Only students can book appointments');
 
-            // Basic conflict check could go here, but omitted for now to keep it simple/flexible
-            const newAppointment = await Appointment.create({
-                studentId: context.user.id,
+            const populatedApt = await bookAppointment(
+                context.user.id,
                 facultyId,
                 date,
                 startTime,
                 endTime,
-                subject,
-                status: 'Pending'
-            });
-
-            const populatedApt = await Appointment.findById(newAppointment._id); // Needed to populate via resolvers effectively? 
-            // Actually resolvers handle it on query. But for subscription payload we usually want raw or let resolvers handle.
-            // subscription payload is event map used by graphql execution. simple object is fine if resolvers attached to type work.
+                subject
+            );
 
             pubsub.publish('APPOINTMENT_UPDATED', { appointmentUpdated: populatedApt });
             return populatedApt;
@@ -48,13 +43,11 @@ export const resolvers = {
         updateAppointmentStatus: async (_, { id, status }, context) => {
             if (!context.user || context.user.role !== 'FACULTY') throw new Error('Only faculty can update status');
 
-            const updatedAppointment = await Appointment.findOneAndUpdate(
-                { _id: id, facultyId: context.user.id },
-                { status },
-                { new: true }
+            const updatedAppointment = await updateAppointmentStatus(
+                id,
+                status,
+                context.user.id
             );
-
-            if (!updatedAppointment) throw new Error("Appointment not found");
 
             pubsub.publish('APPOINTMENT_UPDATED', { appointmentUpdated: updatedAppointment });
             return updatedAppointment;

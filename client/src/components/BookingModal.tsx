@@ -49,33 +49,91 @@ export const BookingModal: React.FC<BookingModalProps> = ({ faculty, isOpen, onC
     }
   }, [isOpen]);
 
-  // Generate Time Slots based on Faculty Schedule
+  // Generate Time Slots based on Faculty Schedule & Overrides
   useEffect(() => {
-    if (selectedDate && faculty.weeklySchedule?.days) {
-      const dayName = DAYS[selectedDate.getDay()];
-      // Find the specific day schedule (ignoring case if needed, but usually exact match)
-      const daySchedule = faculty.weeklySchedule.days.find(s => s.day.toUpperCase().startsWith(dayName));
+    if (!selectedDate) {
+      setAvailableSlots([]);
+      return;
+    }
 
-      if (daySchedule && !daySchedule.isDayOff) {
-        const slots: string[] = [];
-        daySchedule.slots.forEach(slot => {
-          // Simple 30 min interval generator
+    // Use local date parts to avoid UTC shift issues
+    const year = selectedDate.getFullYear();
+    const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+    const day = String(selectedDate.getDate()).padStart(2, '0');
+    const dateStr = `${year}-${month}-${day}`;
+    
+    let slotsFound: string[] = [];
+    
+    // 1. Check for specific date override first
+    const override = faculty.dateOverrides?.find(o => {
+      const oDateVal = typeof o.date === 'string' ? o.date : new Date(o.date).toISOString();
+      const oDateParts = oDateVal.split('T')[0];
+      return oDateParts === dateStr;
+    });
+
+    if (override) {
+      if (!override.isDayOff) {
+        override.slots.forEach(slot => {
           let current = new Date(`2000-01-01T${slot.startTime}`);
           const end = new Date(`2000-01-01T${slot.endTime}`);
-
           while (current < end) {
-            slots.push(current.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }));
+            slotsFound.push(current.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }));
             current.setMinutes(current.getMinutes() + 30);
           }
         });
-        setAvailableSlots(slots);
-      } else {
-        setAvailableSlots([]);
       }
-    } else {
-      setAvailableSlots([]);
+    } else if (faculty.weeklySchedule?.days) {
+      // 2. Fallback to weekly schedule
+      const dayName = DAYS[selectedDate.getDay()];
+      const daySchedule = faculty.weeklySchedule.days.find(s => s.day.toUpperCase().startsWith(dayName.toUpperCase()));
+
+      if (daySchedule && !daySchedule.isDayOff) {
+        daySchedule.slots.forEach(slot => {
+          let current = new Date(`2000-01-01T${slot.startTime}`);
+          const end = new Date(`2000-01-01T${slot.endTime}`);
+          while (current < end) {
+            slotsFound.push(current.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }));
+            current.setMinutes(current.getMinutes() + 30);
+          }
+        });
+      }
     }
-  }, [selectedDate, faculty.weeklySchedule]);
+
+    // 3. Smart Fallback: If no slots in schedule/overrides but status is AVAILABLE
+    if (slotsFound.length === 0 && (faculty.availability?.status === 'AVAILABLE' || (faculty as any).currentStatus === 'AVAILABLE')) {
+      const now = new Date();
+      const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+      
+      if (dateStr === todayStr) {
+        const nextAt = faculty.availability?.nextAvailableAt || (faculty as any).nextAvailableAt;
+        let startTime = '09:00'; 
+        
+        if (nextAt) {
+          const nextDate = isNaN(Number(nextAt)) ? new Date(nextAt) : new Date(Number(nextAt));
+          if (!isNaN(nextDate.getTime())) {
+            // Check if nextAvailable is actually in the future
+            if (nextDate.getTime() > now.getTime()) {
+              startTime = nextDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+            } else {
+              now.setMinutes(Math.ceil(now.getMinutes() / 30) * 30);
+              startTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+            }
+          }
+        } else {
+          now.setMinutes(Math.ceil(now.getMinutes() / 30) * 30);
+          startTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+        }
+
+        let current = new Date(`2000-01-01T${startTime}`);
+        for (let i = 0; i < 4; i++) {
+          slotsFound.push(current.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }));
+          current.setMinutes(current.getMinutes() + 30);
+        }
+      }
+    }
+
+    setAvailableSlots(slotsFound);
+  }, [selectedDate, faculty.weeklySchedule, faculty.dateOverrides, faculty.availability]);
 
   const handleNextMonth = () => {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
