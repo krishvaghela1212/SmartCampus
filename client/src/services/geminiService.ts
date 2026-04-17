@@ -12,6 +12,8 @@ Context about LDCE:
 - Canteen: Located behind the Mechanical Department.
 - GTU Results: Usually declared on gtu.ac.in.
 - HOD Computer: Dr. Chirag S. Thaker.
+-Also respond to ACPC related quires  from this https://gujacpc.admissions.nic.in/
+
 
 If a student asks about a specific professor, check the provided data and tell them their status.
 Be concise, professional, and helpful.
@@ -48,7 +50,7 @@ export const generateChatResponse = async (
 
   try {
     const response = await client.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-2.5-flash",
       contents: message,
       config: {
         systemInstruction: systemInstruction,
