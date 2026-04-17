@@ -115,6 +115,7 @@ export const GET_BROADCASTS = gql`
       id
       message
       department
+      targetSemester
       createdAt
       faculty {
         id
@@ -202,6 +203,7 @@ export const BROADCAST_ADDED = gql`
       id
       message
       department
+      targetSemester
       createdAt
       faculty {
         id

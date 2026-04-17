@@ -18,7 +18,7 @@ interface FacultyDashboardProps {
     myNotes: any[];
   };
   onUpdateStatus: (id: string, status: FacultyStatus) => void; // Keeps original signature for App.tsx compatibility, but we might bypass it
-  onPostBroadcast: (message: string) => void;
+  onPostBroadcast: (message: string, targetSemester: string) => void;
   onRefreshSchedule: () => void;
 }
 
@@ -54,6 +54,7 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
   const [nextSlot, setNextSlot] = useState(currentFaculty.availability?.nextAvailableAt ? new Date(Number(currentFaculty.availability.nextAvailableAt)).toISOString().slice(0, 16) : '');
 
   const [broadcastText, setBroadcastText] = useState('');
+  const [targetSemester, setTargetSemester] = useState('ALL');
   const [isSaved, setIsSaved] = useState(false);
 
   // Chat State
@@ -110,8 +111,9 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
 
   const handlePost = () => {
     if (!broadcastText.trim()) return;
-    onPostBroadcast(broadcastText);
+    onPostBroadcast(broadcastText, targetSemester);
     setBroadcastText('');
+    setTargetSemester('ALL');
     alert('Broadcast posted successfully!');
   };
 
@@ -289,9 +291,22 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
                 <h2 className="text-xl font-bold text-textPrimary flex items-center mb-4">
                   <Megaphone className="w-5 h-5 mr-2 text-warning" /> Student Broadcast
                 </h2>
-                <textarea value={broadcastText} onChange={(e) => setBroadcastText(e.target.value)} placeholder="e.g. BE Sem 6 Class for today is rescheduled to 2 PM in Lab 4." className="w-full h-32 p-4 bg-bgPrimary border border-border text-textPrimary rounded-lg focus:ring-1 focus:ring-warning focus:border-warning outline-none resize-none placeholder-textSecondary" />
-                <div className="mt-4 flex justify-end">
-                  <button onClick={handlePost} disabled={!broadcastText.trim()} className="bg-warning text-bgPrimary px-6 py-2.5 rounded-lg font-bold hover:bg-yellow-600 disabled:opacity-50 transition-colors shadow-lg shadow-warning/10">Post to Students</button>
+                <textarea value={broadcastText} onChange={(e) => setBroadcastText(e.target.value)} placeholder="e.g. BE Sem 6 Class for today is rescheduled to 2 PM in Lab 4." className="w-full h-24 p-4 bg-bgPrimary border border-border text-textPrimary rounded-lg focus:ring-1 focus:ring-warning focus:border-warning outline-none resize-none placeholder-textSecondary" />
+                <div className="mt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div className="w-full sm:w-48">
+                    <label className="block text-[10px] uppercase tracking-widest font-bold text-textSecondary mb-1.5 ml-1">Target Semester</label>
+                    <select 
+                      value={targetSemester} 
+                      onChange={(e) => setTargetSemester(e.target.value)}
+                      className="w-full bg-bgPrimary border border-border text-textPrimary text-xs rounded-lg px-3 py-2 outline-none focus:ring-1 focus:ring-warning transition-all"
+                    >
+                      <option value="ALL">All Semesters</option>
+                      {[1, 2, 3, 4, 5, 6, 7, 8].map(s => (
+                        <option key={s} value={s.toString()}>Semester {s}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <button onClick={handlePost} disabled={!broadcastText.trim()} className="w-full sm:w-auto bg-warning text-bgPrimary px-6 py-2.5 rounded-lg font-bold hover:bg-yellow-600 disabled:opacity-50 transition-colors shadow-lg shadow-warning/10">Post Broadcast</button>
                 </div>
               </div>
               {myBroadcasts.length > 0 && (
@@ -300,7 +315,15 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
                   <div className="space-y-3 max-h-48 overflow-y-auto pr-1">
                     {myBroadcasts.map(b => (
                       <div key={b.id} className="bg-bgSecondary p-3 rounded-lg text-sm flex justify-between items-start group">
-                        <div><p className="text-textPrimary">{b.message}</p><p className="text-xs text-textSecondary mt-1">{new Date(Number(b.createdAt)).toLocaleString()}</p></div>
+                        <div>
+                          <div className="flex items-center space-x-2 mb-1">
+                            <p className="text-textPrimary leading-snug">{b.message}</p>
+                            <span className={`text-[10px] px-1.5 py-0.5 rounded-full border border-warning/30 bg-warning/10 text-warning font-bold`}>
+                              {b.targetSemester === 'ALL' ? 'ALL SEM' : `SEM ${b.targetSemester}`}
+                            </span>
+                          </div>
+                          <p className="text-xs text-textSecondary mt-1">{new Date(Number(b.createdAt)).toLocaleString()}</p>
+                        </div>
                         <button onClick={() => handleDeleteBroadcast(b.id)} className="text-textSecondary hover:text-error opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 className="w-4 h-4" /></button>
                       </div>
                     ))}

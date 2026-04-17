@@ -83,6 +83,7 @@ export interface BroadcastMessage {
   facultyName?: string; // Legacy
   message: string;
   department?: string;
+  targetSemester?: string;
   createdAt: string;
 }
 

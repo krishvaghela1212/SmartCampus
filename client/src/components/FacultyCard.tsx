@@ -73,7 +73,7 @@ export const FacultyCard: React.FC<FacultyCardProps> = ({ faculty, onNotify, onR
           <div className="w-16 h-16 rounded-2xl bg-bgSecondary border-2 border-border group-hover:border-accent flex items-center justify-center text-textSecondary group-hover:text-accent transition-all">
             <User className="w-8 h-8" />
           </div>
-          <div className={`absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-4 border-card ${currentStatus === FacultyStatus.AVAILABLE ? 'bg-emerald-500 animate-pulse' :
+          <div className={`absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-4 border-card ${currentStatus === FacultyStatus.AVAILABLE ? 'bg-emerald-500' :
             currentStatus === FacultyStatus.BUSY ? 'bg-amber-500' : 'bg-red-500'
             }`}></div>
         </div>

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform, Variants } from 'framer-motion';
 import {
   ArrowRight, Bot, Users, Calendar, Radio, CheckCircle, Smartphone, Shield, Zap, MousePointer2,
-  Clock, MessageCircle, Megaphone, GraduationCap, ChevronRight
+  Clock, MessageCircle, Megaphone, ChevronRight
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { UserRole } from '@/types';
@@ -75,8 +75,8 @@ export const LandingPage: React.FC = () => {
     <div className="flex flex-col min-h-screen bg-bgPrimary overflow-x-hidden">
       {/* Background Glows */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="absolute top-[-5%] left-[-5%] w-[60%] h-[60%] bg-accent/5 rounded-full blur-[100px] animate-pulse-slow"></div>
-        <div className="absolute bottom-[-5%] right-[-5%] w-[60%] h-[60%] bg-emerald-500/5 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: '3s' }}></div>
+        <div className="absolute top-[-10%] left-[-10%] w-[70%] h-[70%] bg-accent/3 rounded-full blur-[80px] will-change-transform"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[70%] h-[70%] bg-emerald-500/3 rounded-full blur-[80px] will-change-transform"></div>
       </div>
 
       {/* Persistent Dark Glass Navbar */}
@@ -92,15 +92,15 @@ export const LandingPage: React.FC = () => {
             className="flex items-center space-x-2 sm:space-x-3 cursor-pointer"
             onClick={() => window.location.reload()}
           >
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-accent to-emerald-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg shadow-accent/20 rotate-3 transition-transform">
-              <GraduationCap className="text-white w-5 h-5 sm:w-6 sm:h-6 -rotate-3" />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-sm rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg border border-white/10 transition-transform">
+              <img src="/favicon.png" alt="SmartCampus Logo" className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
             </div>
             <div>
               <span className="text-lg sm:text-xl font-bold tracking-tight text-white">SmartCampus</span>
               <span className="text-[8px] sm:text-[10px] block text-accent tracking-widest uppercase font-bold text-glow">L.D.C.E.</span>
             </div>
           </motion.div>
-          
+
           <div className="flex items-center space-x-3 sm:space-x-8">
             <button
               onClick={handleFacultyPortal}
@@ -144,83 +144,13 @@ export const LandingPage: React.FC = () => {
               variants={itemVariants}
               className="text-4xl sm:text-6xl md:text-8xl font-extrabold tracking-tight text-white mb-6 sm:mb-8 leading-[1.2] sm:leading-[1.1] text-center px-2"
             >
-              {"Bridging the Gap".split("").map((char, i) => (
-                <motion.span
-                  key={`l1-${i}`}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                    filter: ["brightness(1)", "brightness(2)", "brightness(1)"]
-                  }}
-                  transition={{
-                    opacity: { delay: 0.4 + i * 0.03, duration: 0.4 },
-                    x: { delay: 0.4 + i * 0.03, duration: 0.4 },
-                    filter: {
-                      delay: 2.0 + i * 0.08,
-                      duration: 0.8,
-                      repeat: Infinity,
-                      repeatDelay: 2,
-                      ease: "easeInOut"
-                    }
-                  }}
-                  className={char === " " ? "inline-block w-[0.3em]" : "inline-block"}
-                >
-                  {char === " " ? "\u00A0" : char}
-                </motion.span>
-              ))}
+              Bridging the Gap
               <br />
-              {"between".split("").map((char, i) => (
-                <motion.span
-                  key={`l2-${i}`}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                    filter: ["brightness(1)", "brightness(2)", "brightness(1)"]
-                  }}
-                  transition={{
-                    opacity: { delay: 1.0 + i * 0.04, duration: 0.4 },
-                    x: { delay: 1.0 + i * 0.04, duration: 0.4 },
-                    filter: {
-                      delay: 2.5 + i * 0.08,
-                      duration: 0.8,
-                      repeat: Infinity,
-                      repeatDelay: 2,
-                      ease: "easeInOut"
-                    }
-                  }}
-                  className="inline-block"
-                >
-                  {char}
-                </motion.span>
-              ))}
+              between
               <br />
-              {"Faculty & Students.".split("").map((char, i) => (
-                <motion.span
-                  key={`l3-${i}`}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                    filter: ["brightness(1)", "brightness(1.5)", "brightness(1)"]
-                  }}
-                  transition={{
-                    opacity: { delay: 1.4 + i * 0.04, duration: 0.4 },
-                    x: { delay: 1.4 + i * 0.04, duration: 0.4 },
-                    filter: {
-                      delay: 3.0 + i * 0.08,
-                      duration: 0.8,
-                      repeat: Infinity,
-                      repeatDelay: 2,
-                      ease: "easeInOut"
-                    }
-                  }}
-                  className={`inline-block text-transparent bg-clip-text bg-gradient-to-r from-accent via-emerald-400 to-accent bg-[length:200%_auto] animate-[pulse_5s_ease-in-out_infinite]${char === " " ? " w-[0.3em]" : ""}`}
-                >
-                  {char === " " ? "\u00A0" : char}
-                </motion.span>
-              ))}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-emerald-400 to-accent">
+                Faculty & Students.
+              </span>
             </motion.h1>
 
             <motion.p
@@ -356,8 +286,8 @@ export const LandingPage: React.FC = () => {
           <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-20">
             <div className="max-w-md">
               <div className="flex items-center space-x-3 mb-6">
-                <div className="w-10 h-10 bg-accent/20 rounded-xl flex items-center justify-center border border-accent/30">
-                  <GraduationCap className="text-accent w-6 h-6" />
+                <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center border border-white/10">
+                  <img src="/favicon.png" alt="SmartCampus Logo" className="w-6 h-6 object-contain" />
                 </div>
                 <span className="text-2xl font-bold text-white tracking-tight">SmartCampus</span>
               </div>
@@ -392,7 +322,6 @@ export const LandingPage: React.FC = () => {
             <div className="flex items-center space-x-6">
               <span className="font-medium text-white/40">The Team:</span>
               <div className="flex space-x-4 text-accent font-semibold">
-                <span className="hover:text-white transition-colors cursor-default">Arman Amreliya</span>
                 <span className="hover:text-white transition-colors cursor-default">Krish Vaghela</span>
                 <span className="hover:text-white transition-colors cursor-default">Riya Nandasana</span>
               </div>

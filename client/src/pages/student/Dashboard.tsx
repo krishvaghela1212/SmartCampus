@@ -15,7 +15,7 @@ import { BOOK_APPOINTMENT, REQUEST_NOTIFICATION } from '@/graphql/mutations';
 import {
     Search, LayoutDashboard, Users, MessageCircle, Radio, LogOut,
     CheckCircle2, MinusCircle, Clock,
-    User, ExternalLink, GraduationCap, FileText,
+    User, ExternalLink, FileText,
     Bell, Mail, Sun, Moon, List, Calendar as CalendarIcon,
     ChevronLeft, ChevronRight, XCircle
 } from 'lucide-react';
@@ -106,6 +106,13 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ facultyList,
             );
         });
     }, [facultyList, selectedDept, searchTerm]);
+    
+    const filteredBroadcasts = useMemo(() => {
+        return broadcasts.filter(b => 
+            b.targetSemester === 'ALL' || 
+            b.targetSemester === profile.semester?.toString()
+        );
+    }, [broadcasts, profile.semester]);
 
     const [bookAppointmentMutation] = useMutation(BOOK_APPOINTMENT);
     const [requestNotificationMutation] = useMutation(REQUEST_NOTIFICATION);
@@ -246,7 +253,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ facultyList,
                 <div className="absolute top-0 left-0 w-72 h-full bg-bgSecondary p-6 shadow-2xl border-r border-border">
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center space-x-2">
-                             <GraduationCap className="text-accent w-6 h-6" />
+                             <img src="/favicon.png" alt="Logo" className="w-6 h-6 object-contain" />
                              <span className="text-white font-bold">SmartCampus</span>
                         </div>
                         <button onClick={() => setIsSidebarOpen(false)}><XCircle className="text-textSecondary w-6 h-6" /></button>
@@ -275,8 +282,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ facultyList,
             {/* Desktop Sidebar */}
             <div className="w-64 bg-bgSecondary border-r border-border hidden md:flex flex-col p-4 shrink-0">
                 <div className="flex items-center space-x-3 px-2 mb-8">
-                    <div className="w-10 h-10 bg-accent rounded-2xl flex items-center justify-center shadow-lg shadow-accent/20 rotate-3 transition-transform hover:rotate-6">
-                        <span className="text-bgPrimary font-bold text-xl -rotate-3">L</span>
+                    <div className="w-10 h-10 bg-white/5 backdrop-blur-sm rounded-2xl flex items-center justify-center shadow-lg border border-white/10 transition-transform hover:scale-105">
+                        <img src="/favicon.png" alt="Logo" className="w-7 h-7 object-contain" />
                     </div>
                     <div>
                         <span className="block text-base font-bold text-textPrimary tracking-tight leading-none">SmartCampus</span>
@@ -368,12 +375,12 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ facultyList,
                                 <div className="relative z-10">
                                     <h1 className="text-3xl font-extrabold text-textPrimary mb-2 leading-tight">Welcome back, <span className="text-accent">{profile.name?.split(' ')[0]}!</span></h1>
                                     <p className="text-textSecondary text-sm flex items-center">
-                                        <GraduationCap className="w-4 h-4 mr-2 text-accent" />
+                                        <img src="/favicon.png" alt="Logo" className="w-4 h-4 mr-2" />
                                         {profile.department} • Semester {profile.semester}
                                     </p>
                                 </div>
-                                <div className="absolute right-0 top-0 h-full opacity-10 -rotate-12 translate-x-12">
-                                    <GraduationCap className="h-48 w-48 text-accent" />
+                                <div className="absolute right-0 top-0 h-full opacity-5 -rotate-12 translate-x-12 pointer-events-none will-change-transform">
+                                    <img src="/favicon.png" alt="decor" className="h-48 w-48 object-contain" />
                                 </div>
                             </motion.div>
 
@@ -418,7 +425,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ facultyList,
                                             </h2>
                                             <button onClick={() => setCurrentView(DashboardView.BROADCASTS)} className="text-xs font-bold text-accent hover:underline">View Feed</button>
                                         </div>
-                                        <BroadcastBoard broadcasts={broadcasts.slice(0, 2)} />
+                                        <BroadcastBoard broadcasts={filteredBroadcasts.slice(0, 2)} />
                                     </motion.div>
 
                                     <motion.div variants={itemVariants}>
@@ -732,7 +739,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ facultyList,
                     {currentView === DashboardView.BROADCASTS && (
                         <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="max-w-4xl mx-auto space-y-6">
                             <h2 className="text-2xl font-black text-textPrimary mb-6 px-1">Global Broadcast Feed</h2>
-                            <BroadcastBoard broadcasts={broadcasts} />
+                            <BroadcastBoard broadcasts={filteredBroadcasts} />
                         </motion.div>
                     )}
 

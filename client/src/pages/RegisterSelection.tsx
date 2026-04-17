@@ -21,8 +21,8 @@ export const RegisterSelectionPage: React.FC = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-bgPrimary p-4 relative overflow-hidden">
             {/* Background Decor */}
-            <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
-            <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+            <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-accent/3 rounded-full blur-[80px] pointer-events-none will-change-transform"></div>
+            <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-500/3 rounded-full blur-[80px] pointer-events-none will-change-transform"></div>
 
             <div className="w-full max-w-md bg-card/50 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/10 overflow-hidden relative z-10">
 

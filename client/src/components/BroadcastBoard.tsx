@@ -21,9 +21,16 @@ export const BroadcastBoard: React.FC<BroadcastBoardProps> = ({ broadcasts }) =>
           broadcasts.map((msg) => (
             <div key={msg.id} className="p-4 hover:bg-bgSecondary transition-colors border-l-4 border-l-transparent hover:border-l-accent">
               <div className="flex justify-between items-start mb-1">
-                <span className="text-xs font-bold text-bgPrimary bg-accent px-2 py-0.5 rounded-md">
-                  {msg.department || 'Global'}
-                </span>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-[10px] font-bold text-bgPrimary bg-accent px-2 py-0.5 rounded-md uppercase">
+                    {msg.department || 'Global'}
+                  </span>
+                  {msg.targetSemester && (
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${msg.targetSemester === 'ALL' ? 'bg-bgSecondary text-textSecondary border-border' : 'bg-warning/10 text-warning border-warning/30'}`}>
+                      {msg.targetSemester === 'ALL' ? 'ALL SEM' : `SEM ${msg.targetSemester}`}
+                    </span>
+                  )}
+                </div>
                 <div className="flex items-center text-xs text-textSecondary">
                   <Clock className="w-3 h-3 mr-1" />
                   {msg.timestamp}

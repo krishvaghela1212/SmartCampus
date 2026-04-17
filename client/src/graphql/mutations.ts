@@ -92,11 +92,12 @@ export const UPDATE_APPOINTMENT_STATUS = gql`
 `;
 
 export const SEND_BROADCAST = gql`
-  mutation SendBroadcast($message: String!, $department: String) {
-    sendBroadcast(message: $message, department: $department) {
+  mutation SendBroadcast($message: String!, $department: String, $targetSemester: String) {
+    sendBroadcast(message: $message, department: $department, targetSemester: $targetSemester) {
       id
       message
       department
+      targetSemester
       createdAt
       faculty {
         id

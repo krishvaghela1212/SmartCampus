@@ -4,7 +4,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useMutation } from '@apollo/client/react';
 import { LOGIN_MUTATION } from '@/graphql/mutations';
 import { UserRole } from '@/types';
-import { Loader2, AlertCircle, GraduationCap, User, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
+import { Loader2, AlertCircle, User, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -70,14 +70,14 @@ export const LoginPage: React.FC = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-bgPrimary p-4 relative overflow-hidden">
       {/* Background Decor */}
-      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-accent/3 rounded-full blur-[80px] pointer-events-none will-change-transform"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-500/3 rounded-full blur-[80px] pointer-events-none will-change-transform"></div>
 
       <div className="w-full max-w-md bg-card/50 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/10 overflow-hidden relative z-10">
         {/* Header */}
         <div className="p-8 text-center border-b border-white/5 bg-black/20">
-          <div className="w-16 h-16 bg-gradient-to-br from-accent to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-accent/20 rotate-3">
-            <GraduationCap className="text-white w-8 h-8 -rotate-3" />
+          <div className="w-20 h-20 bg-white/5 backdrop-blur-md rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-2xl border border-white/10">
+            <img src="/favicon.png" alt="SmartCampus Logo" className="w-14 h-14 object-contain" />
           </div>
           <h2 className="text-2xl font-bold text-white tracking-tight">Welcome Back</h2>
           <p className="text-textSecondary mt-2 text-sm">Sign in to SmartCampus Portal</p>

@@ -17,24 +17,19 @@ export const ThreeDShapes: React.FC = () => {
       >
         <motion.div 
           style={{ y: yMove }}
-          className="absolute inset-0 origin-center"
+          className="absolute inset-0 origin-center will-change-transform"
         >
-          {/* Horizontal Grid Lines */}
+          {/* Grid Lines - Simplified to single div with repeating linear gradient */}
           <div 
-            className="absolute inset-0"
+            className="absolute inset-0 opacity-40"
             style={{
-              backgroundImage: 'linear-gradient(to bottom, transparent 95%, rgba(46, 204, 113, 0.3) 95%)',
-              backgroundSize: '100% 50px',
-              transform: 'rotateX(60deg) scale(2.5) translateY(-20%)',
-            }}
-          />
-          {/* Vertical Grid Lines */}
-          <div 
-            className="absolute inset-0"
-            style={{
-              backgroundImage: 'linear-gradient(to right, transparent 95%, rgba(46, 204, 113, 0.3) 95%)',
-              backgroundSize: '50px 100%',
-              transform: 'rotateX(60deg) scale(2.5) translateY(-20%)',
+              backgroundImage: `
+                linear-gradient(to bottom, rgba(46, 204, 113, 0.1) 1px, transparent 1px),
+                linear-gradient(to right, rgba(46, 204, 113, 0.1) 1px, transparent 1px)
+              `,
+              backgroundSize: '80px 80px',
+              transform: 'rotateX(65deg) scale(3) translateY(-10%)',
+              transformStyle: 'preserve-3d'
             }}
           />
         </motion.div>
@@ -45,41 +40,38 @@ export const ThreeDShapes: React.FC = () => {
         animate={{
           rotateX: [0, 360],
           rotateY: [0, 360],
-          y: [0, -60, 0],
-          x: [0, 30, 0]
-        }}
-        transition={{
-          duration: 25,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-        className="absolute top-[15%] left-[5%] w-40 h-40 border-2 border-accent/30 rounded-2xl preserve-3d glass"
-      >
-        <div className="absolute inset-0 border border-accent/10 rounded-2xl translate-z-10" />
-        <div className="absolute inset-0 border border-accent/10 rounded-2xl -translate-z-10" />
-      </motion.div>
-
-      {/* Floating Tetrahedron-like shape */}
-      <motion.div
-        animate={{
-          rotateZ: [0, 360],
-          rotateX: [360, 0],
-          scale: [0.8, 1.1, 0.8],
+          y: [0, -40, 0]
         }}
         transition={{
           duration: 30,
           repeat: Infinity,
           ease: "linear"
         }}
-        className="absolute bottom-[10%] right-[10%] w-64 h-64 border border-white/10 rounded-[30%] preserve-3d flex items-center justify-center opacity-40"
+        className="absolute top-[20%] left-[8%] w-32 h-32 border border-accent/20 rounded-2xl bg-accent/5 backdrop-blur-[2px] will-change-transform"
+      >
+        <div className="absolute inset-0 border border-accent/10 rounded-2xl shadow-[inset_0_0_20px_rgba(46,204,113,0.1)]" />
+      </motion.div>
+
+      {/* Floating Tetrahedron-like shape */}
+      <motion.div
+        animate={{
+          rotateZ: [0, 360],
+          scale: [0.9, 1.05, 0.9],
+        }}
+        transition={{
+          duration: 40,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+        className="absolute bottom-[15%] right-[12%] w-48 h-48 border border-white/5 rounded-[30%] flex items-center justify-center opacity-30 will-change-transform"
       >
         <div className="w-full h-full border border-accent/20 rounded-full rotate-45 animate-pulse" />
         <div className="absolute w-full h-full border border-accent/20 rounded-full -rotate-45 animate-pulse" />
         <div className="absolute w-1/2 h-1/2 bg-accent/5 rounded-full blur-2xl" />
       </motion.div>
 
-      {/* Floating Particles/Dust */}
-      {[...Array(12)].map((_, i) => (
+      {/* Floating Particles/Dust - Reduced count for performance */}
+      {[...Array(6)].map((_, i) => (
         <motion.div
           key={i}
           initial={{ 

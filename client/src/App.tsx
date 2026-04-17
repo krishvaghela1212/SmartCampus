@@ -215,10 +215,10 @@ const FacultyDashboardWrapper = () => {
         }
     };
 
-    const handlePostBroadcast = async (message: string) => {
+    const handlePostBroadcast = async (message: string, targetSemester: string) => {
         try {
             await sendBroadcastMutation({
-                variables: { message }
+                variables: { message, targetSemester }
             });
         } catch (err) {
             console.error('Error posting broadcast:', err);
@@ -341,6 +341,13 @@ const AnimatedRoutes = () => {
                 transition={{ duration: 0.2, ease: "easeInOut" }}
                 className="relative z-10"
             >
+                {/* Background effects only on non-dashboard routes */}
+                {!location.pathname.includes('dashboard') && (
+                    <>
+                        <ThreeDShapes />
+                        <ParticleField />
+                    </>
+                )}
                 <Routes location={location}>
                     <Route path="/" element={<LandingPage />} />
                     <Route path="/login" element={<LoginPage />} />
@@ -376,8 +383,6 @@ function App() {
                 <AuthProvider>
                     <Router>
                         <div className="min-h-screen relative overflow-x-hidden text-textPrimary bg-bgPrimary">
-                            <ThreeDShapes />
-                            <ParticleField />
                             <Suspense fallback={<LoadingFallback />}>
                                 <AnimatedRoutes />
                             </Suspense>

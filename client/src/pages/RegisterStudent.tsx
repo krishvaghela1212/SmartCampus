@@ -4,7 +4,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useMutation } from '@apollo/client/react';
 import { REGISTER_STUDENT_MUTATION } from '@/graphql/mutations';
 import { UserRole } from '@/types';
-import { Loader2, AlertCircle, GraduationCap, User, Mail, Hash, BookOpen, Layers, Lock, Eye, EyeOff, ArrowLeft } from 'lucide-react';
+import { Loader2, AlertCircle, User, Mail, Hash, BookOpen, Layers, Lock, Eye, EyeOff, ArrowLeft } from 'lucide-react';
 
 export const RegisterStudentPage: React.FC = () => {
     const navigate = useNavigate();
@@ -83,13 +83,13 @@ export const RegisterStudentPage: React.FC = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-bgPrimary p-4 relative overflow-hidden py-12">
-            <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
-            <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+            <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-accent/3 rounded-full blur-[80px] pointer-events-none will-change-transform"></div>
+            <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-500/3 rounded-full blur-[80px] pointer-events-none will-change-transform"></div>
 
             <div className="w-full max-w-2xl bg-card/50 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/10 overflow-hidden relative z-10">
                 <div className="p-8 text-center border-b border-white/5 bg-black/20">
-                    <div className="w-16 h-16 bg-gradient-to-br from-accent to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-accent/20">
-                        <GraduationCap className="text-white w-8 h-8" />
+                    <div className="w-16 h-16 bg-white/5 backdrop-blur-md rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl border border-white/10">
+                        <img src="/favicon.png" alt="SmartCampus Logo" className="w-10 h-10 object-contain" />
                     </div>
                     <h2 className="text-2xl font-bold text-white tracking-tight">Student Registration</h2>
                     <p className="text-textSecondary mt-2 text-sm">Join the SmartCampus network</p>
