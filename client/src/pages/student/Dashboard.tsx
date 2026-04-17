@@ -727,6 +727,73 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ facultyList,
                         </motion.div>
                     )}
 
+                    {currentView === DashboardView.NOTIFICATIONS && (
+                        <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="max-w-4xl mx-auto space-y-6">
+                            <div className="flex justify-between items-center mb-6 px-1">
+                                <h2 className="text-2xl font-black text-textPrimary">Inbox</h2>
+                                <button onClick={() => storageService.markNotificationsRead()} className="text-xs font-bold text-accent hover:underline">Mark all as read</button>
+                            </div>
+
+                            {notifications.length === 0 ? (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="relative overflow-hidden bg-card border border-border border-dashed rounded-[2rem] py-24 text-center group"
+                                >
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-accent/5 blur-[100px] rounded-full group-hover:bg-accent/10 transition-colors"></div>
+
+                                    <div className="relative z-10">
+                                        <div className="w-20 h-20 bg-bgSecondary rounded-full flex items-center justify-center mx-auto mb-6 border border-border group-hover:scale-110 transition-transform duration-500">
+                                            <CheckCircle2 className="w-10 h-10 text-accent opacity-40" />
+                                        </div>
+                                        <h3 className="text-xl font-bold text-textPrimary mb-2">Inbox Zero!</h3>
+                                        <p className="text-textSecondary text-sm max-w-xs mx-auto mb-8">
+                                            You're all caught up. No new alerts or appointment updates at the moment.
+                                        </p>
+
+                                        <div className="flex items-center justify-center gap-3">
+                                            <button
+                                                onClick={() => setCurrentView(DashboardView.FACULTY_LIST)}
+                                                className="px-6 py-2.5 bg-accent text-bgPrimary text-xs font-black rounded-xl hover:bg-accentHover shadow-lg shadow-accent/20 transition-all font-outfit"
+                                            >
+                                                Book a Visit
+                                            </button>
+                                            <button
+                                                onClick={() => setCurrentView(DashboardView.CHATBOT)}
+                                                className="px-6 py-2.5 bg-bgSecondary text-textPrimary text-xs font-black border border-border rounded-xl hover:bg-card transition-all font-outfit"
+                                            >
+                                                Ask AI Assistant
+                                            </button>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ) : (
+                                <div className="space-y-4">
+                                    {notifications.map(notif => (
+                                        <motion.div
+                                            key={notif.id}
+                                            initial={{ opacity: 0, x: -20 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            className={`p-5 rounded-2xl border flex items-start gap-4 transition-all hover:translate-x-1 ${!notif.isRead ? 'bg-accent/5 border-accent/20' : 'bg-card border-border opacity-70'
+                                                }`}
+                                        >
+                                            <div className={`p-3 rounded-xl ${notif.type === 'APPOINTMENT' ? 'bg-accent/10 text-accent' : 'bg-warning/10 text-warning'}`}>
+                                                {notif.type === 'APPOINTMENT' ? <CalendarIcon className="w-5 h-5" /> : <Bell className="w-5 h-5" />}
+                                            </div>
+                                            <div className="flex-1">
+                                                <h4 className="text-sm font-bold text-textPrimary mb-1">{notif.title}</h4>
+                                                <p className="text-xs text-textSecondary leading-relaxed mb-2">{notif.message}</p>
+                                                <span className="text-[10px] text-textSecondary/60 font-medium">
+                                                    {new Date(notif.timestamp).toLocaleString()}
+                                                </span>
+                                            </div>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            )}
+                        </motion.div>
+                    )}
+
                     {currentView === DashboardView.CHATBOT && (
                         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="h-full max-w-4xl mx-auto flex flex-col">
                             <h2 className="text-2xl font-black text-textPrimary mb-6">AI Academic Assistant</h2>
