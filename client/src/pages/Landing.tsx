@@ -93,7 +93,7 @@ export const LandingPage: React.FC = () => {
             onClick={() => window.location.reload()}
           >
             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-sm rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg border border-white/10 transition-transform">
-              <img src="/favicon.png" alt="EasyConnect Logo" className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
+              <img src="/favicon.jpeg" alt="EasyConnect Logo" className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
             </div>
             <div>
               <span className="text-lg sm:text-xl font-bold tracking-tight text-white">EasyConnect</span>
@@ -287,7 +287,7 @@ export const LandingPage: React.FC = () => {
             <div className="max-w-md">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center border border-white/10">
-                  <img src="/favicon.png" alt="EasyConnect Logo" className="w-6 h-6 object-contain" />
+                  <img src="/favicon.jpeg" alt="EasyConnect Logo" className="w-6 h-6 object-contain" />
                 </div>
                 <span className="text-2xl font-bold text-white tracking-tight">EasyConnect</span>
               </div>

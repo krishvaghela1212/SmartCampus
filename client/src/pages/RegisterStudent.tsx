@@ -89,7 +89,7 @@ export const RegisterStudentPage: React.FC = () => {
             <div className="w-full max-w-2xl bg-card/50 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/10 overflow-hidden relative z-10">
                 <div className="p-8 text-center border-b border-white/5 bg-black/20">
                     <div className="w-16 h-16 bg-white/5 backdrop-blur-md rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl border border-white/10">
-                        <img src="/favicon.png" alt="EasyConnect Logo" className="w-10 h-10 object-contain" />
+                        <img src="/favicon.jpeg" alt="EasyConnect Logo" className="w-10 h-10 object-contain" />
                     </div>
                     <h1 className="text-3xl font-extrabold text-textPrimary tracking-tight">Create Account</h1>
                     <p className="text-textSecondary mt-2 text-sm">Join the EasyConnect network</p>

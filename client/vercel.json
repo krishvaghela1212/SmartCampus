@@ -1,6 +1,6 @@
 {
   "version": 2,
   "rewrites": [
-    { "source": "/((?!assets/|favicon.png|hero-bg.png).*)", "destination": "/index.html" }
+    { "source": "/((?!assets/|favicon.jpeg|hero-bg.png).*)", "destination": "/index.html" }
   ]
 }

@@ -77,7 +77,7 @@ export const LoginPage: React.FC = () => {
         {/* Header */}
         <div className="p-8 text-center border-b border-white/5 bg-black/20">
           <div className="w-20 h-20 bg-white/5 backdrop-blur-md rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-2xl border border-white/10">
-            <img src="/favicon.png" alt="EasyConnect Logo" className="w-14 h-14 object-contain" />
+            <img src="/favicon.jpeg" alt="EasyConnect Logo" className="w-14 h-14 object-contain" />
           </div>
           <h1 className="text-4xl font-extrabold text-textPrimary tracking-tight">Welcome Back</h1>
           <p className="text-textSecondary mt-2 text-sm">Sign in to EasyConnect Portal</p>
